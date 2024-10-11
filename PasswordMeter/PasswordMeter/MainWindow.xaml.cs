@@ -28,45 +28,35 @@ namespace PasswordMeter
 
         private void passwordMeterButton_Click(object sender, RoutedEventArgs e)
         {
-            username = userNameTextBox.Text;
-            password = passwordTextBox.Text;
 
-            username = username.Trim();
-            password = password.Trim();
+        }
 
-            bool containsUsername = password.Contains(username);
+        private string generatePassword(string username, string password)
+        {
 
-            bool isDigit = false;
 
-            for (int i = 0; i < password.Length - 1; i++)
+            string result = "";
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < 5; i++)
             {
-                char letter;
-                string eerstVolgendeLetter = password.Substring(i, i + 1);
-                letter = char.Parse(eerstVolgendeLetter);
+                Random rnd = new Random();
+                int randomInt = rnd.Next(0, username.Length);
+                string randomString = username.Substring(randomInt, 1);
 
-                isDigit = char.IsDigit(letter);
-                if (isDigit == true)
-                {
-                    break;
-
-                }
-                bool contains10Characters = password.Length >= 10;
-
-
-
-                if(containsUsername == false && isDigit == true && contains10Characters == true)
-                {
-                    resultTextBlock.Text = "Wachtwoord OK";
-                    resultTextBlock.Foreground = Brushes.Green;
-                }
-                else
-                {
-                    resultTextBlock.Text = "Wachtwoord NIET OK";
-                    resultTextBlock.Foreground= Brushes.Red;
-
-                }
-                
+                sb.Append(randomString.ToLower());
             }
+            for (int i = 0; i < 5; i++)
+            {
+                int randomInt = rnd.Next(0, 10);
+                sb.Append(randomInt);
+            }
+            
+            
+            
+            
+            return result;
+
         }
     }
-} 
+}
