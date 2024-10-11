@@ -15,15 +15,11 @@ using System.Windows.Shapes;
 
 namespace PasswordMeter
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// Input velden: userNameTextBox en passwordTextBox
-        /// Output veld: resultTextBlock
-        /// </summary>
+        string username;
+        string password;
 
         public MainWindow()
         {
@@ -32,7 +28,45 @@ namespace PasswordMeter
 
         private void passwordMeterButton_Click(object sender, RoutedEventArgs e)
         {
+            username = userNameTextBox.Text;
+            password = passwordTextBox.Text;
 
+            username = username.Trim();
+            password = password.Trim();
+
+            bool containsUsername = password.Contains(username);
+
+            bool isDigit = false;
+
+            for (int i = 0; i < password.Length - 1; i++)
+            {
+                char letter;
+                string eerstVolgendeLetter = password.Substring(i, i + 1);
+                letter = char.Parse(eerstVolgendeLetter);
+
+                isDigit = char.IsDigit(letter);
+                if (isDigit == true)
+                {
+                    break;
+
+                }
+                bool contains10Characters = password.Length >= 10;
+
+
+
+                if(containsUsername == false && isDigit == true && contains10Characters == true)
+                {
+                    resultTextBlock.Text = "Wachtwoord OK";
+                    resultTextBlock.Foreground = Brushes.Green;
+                }
+                else
+                {
+                    resultTextBlock.Text = "Wachtwoord NIET OK";
+                    resultTextBlock.Foreground= Brushes.Red;
+
+                }
+                
+            }
         }
     }
-}
+} 
